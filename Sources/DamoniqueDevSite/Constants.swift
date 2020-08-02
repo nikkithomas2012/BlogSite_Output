@@ -13,3 +13,9 @@ let twitterLink = "https://twitter.com/damonique_dev"
 let instagramLink = "https://www.instagram.com/damonique.dev/"
 let youtubeLink = "https://www.youtube.com/channel/UCJ68GtUPz2UsNJIyyHz7tIA"
 let linkedInLink = "https://www.linkedin.com/in/damoniqueblake/"
+
+extension Double {
+    func roundToInt() -> Int{
+        return Int(self.rounded(.toNearestOrAwayFromZero))
+    }
+}

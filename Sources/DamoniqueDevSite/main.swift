@@ -1,6 +1,7 @@
 import Foundation
 import Publish
 import Plot
+import ReadingTimePublishPlugin
 
 // This type acts as the configuration for your website.
 struct DamoniqueDevSite: Website {
@@ -25,13 +26,35 @@ struct DamoniqueDevSite: Website {
     var favicon = Favicon()
 }
 
-// This will generate your website using the built-in Foundation theme:
-try DamoniqueDevSite().publish(
-    withTheme: .damoniqueDev,
-    additionalSteps: [
+extension PublishingStep where Site == DamoniqueDevSite {
+    static func useCustomDateFormatter() -> Self {
         .step(named: "Use custom DateFormatter") { context in
             let formatter = DateFormatter()
             formatter.dateFormat = "MMMM d, YYYY"
             context.dateFormatter = formatter
         }
+    }
+}
+
+// This will generate your website using the built-in Foundation theme:
+try DamoniqueDevSite().publish(using: [
+        .copyResources(),
+        .addMarkdownFiles(),
+        .installPlugin(.readingTime()),
+        .sortItems(by: \.date, order: .descending),
+        .useCustomDateFormatter(),
+        .generateHTML(withTheme: .damoniqueDev),
+        .generateSiteMap()
     ])
+    
+    
+//    withTheme: .damoniqueDev,
+//    additionalSteps: [
+//        .step(named: "Use custom DateFormatter") { context in
+//            let formatter = DateFormatter()
+//            formatter.dateFormat = "MMMM d, YYYY"
+//            context.dateFormatter = formatter
+//        }
+//    ],
+//    plugins: [.readingTime()]
+//)

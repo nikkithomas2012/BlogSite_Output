@@ -83,11 +83,14 @@ private struct DamoniqueDevHTMLFactory<Site: Website>: HTMLFactory {
                 .header(for: context, selectedTitle: item.title),
                 .wrapper(
                     .article(
-                        .span(
+                        .div(
                             .class("date"),
+                            .attribute(named: "style", value: "display: inline-flex;"),
                             .p("Published: ",
                                .text(context.dateFormatter.string(from: item.date))
-                            )
+                            ),
+                            .p( .attribute(named: "style", value: "margin: 0 7px;"),
+                                " • \(item.readingTime.minutes.roundToInt()) minute Read")
                         ),
                         .h1(.text(item.title)),
                         .tagList(for: item, on: context.site),
@@ -253,11 +256,14 @@ private extension Node where Context == HTML.BodyContext {
                         .br(),
                         .span(
                             .tagList(for: item, on: context.site),
-                            .span(
+                            .div(
                                 .class("date"),
+                                .attribute(named: "style", value: "display: inline-flex;"),
                                 .p("Published: ",
                                    .text(context.dateFormatter.string(from: item.date))
-                                )
+                                ),
+                                .p( .attribute(named: "style", value: "margin: 0 7px;"),
+                                    " • \(item.readingTime.minutes.roundToInt()) minute Read")
                             )
                         )
                     )

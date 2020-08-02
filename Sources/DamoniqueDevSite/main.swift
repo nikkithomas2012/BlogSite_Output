@@ -2,6 +2,7 @@ import Foundation
 import Publish
 import Plot
 import ReadingTimePublishPlugin
+import CNAMEPublishPlugin
 
 // This type acts as the configuration for your website.
 struct DamoniqueDevSite: Website {
@@ -44,7 +45,9 @@ try DamoniqueDevSite().publish(using: [
         .sortItems(by: \.date, order: .descending),
         .useCustomDateFormatter(),
         .generateHTML(withTheme: .damoniqueDev),
-        .generateSiteMap()
+        .generateSiteMap(),
+        .installPlugin(.generateCNAME(with: "damonique.dev", "www.damonique.dev")),
+        .deploy(using: .gitHub("nikkithomas2012/BlogSite"))
     ])
     
     
